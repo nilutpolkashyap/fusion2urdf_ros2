@@ -170,4 +170,37 @@ def update_package_xml(save_dir, package_name):
             sys.stdout.write("<description>The " + package_name + " package</description>\n")
         else:
             sys.stdout.write(line)
+
+def update_display_launch_py(save_dir, package_name, robot_name):
+    file_name = save_dir + '/launch' + '/display.launch.py'
+
+    for line in fileinput.input(file_name, inplace=True):
+        if 'pkg_share = get_package_share_directory' in line:
+            sys.stdout.write("  pkg_share = get_package_share_directory('" + package_name + "')\n")
+
+        elif 'default_model_path = os.path.join' in line:
+            sys.stdout.write("  default_model_path = os.path.join(pkg_share, 'urdf/" + robot_name + ".xacro')\n")
+
+        elif 'robot_name_in_urdf' in line:
+            sys.stdout.write("  robot_name_in_urdf = '" + robot_name + "'\n")
+            
+        else:
+            sys.stdout.write(line)
+
+def update_gazebo_launch_py(save_dir, package_name, robot_name):
+    file_name = save_dir + '/launch' + '/gazebo.launch.py'
+
+    for line in fileinput.input(file_name, inplace=True):
+        if 'pkg_share = get_package_share_directory' in line:
+            sys.stdout.write("    pkg_share = get_package_share_directory('" + package_name + "')\n")
+
+        elif 'default_model_path = os.path.join' in line:
+            sys.stdout.write("    default_model_path = os.path.join(pkg_share, 'urdf/" + robot_name + ".xacro')\n")
+
+        elif 'robot_name_in_urdf' in line:
+            sys.stdout.write("    robot_name_in_urdf = '" + robot_name + "'\n")
+            
+        else:
+            sys.stdout.write(line)
+
         

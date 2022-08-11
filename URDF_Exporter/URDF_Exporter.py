@@ -88,6 +88,8 @@ def run(context):
         utils.copy_package(save_dir, package_dir)
         utils.update_cmakelists(save_dir, package_name)
         utils.update_package_xml(save_dir, package_name)
+        utils.update_display_launch_py(save_dir, package_name, robot_name)
+        utils.update_gazebo_launch_py(save_dir, package_name, robot_name) 
 
         # Generate STl files        
         utils.copy_occs(root)
