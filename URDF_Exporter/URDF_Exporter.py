@@ -79,17 +79,21 @@ def run(context):
         Write.write_materials_xacro(joints_dict, links_xyz_dict, inertial_dict, package_name, robot_name, save_dir)
         Write.write_transmissions_xacro(joints_dict, links_xyz_dict, inertial_dict, package_name, robot_name, save_dir)
         Write.write_gazebo_xacro(joints_dict, links_xyz_dict, inertial_dict, package_name, robot_name, save_dir)
-        Write.write_display_launch(package_name, robot_name, save_dir)
-        Write.write_gazebo_launch(package_name, robot_name, save_dir)
-        Write.write_control_launch(package_name, robot_name, save_dir, joints_dict)
         Write.write_yaml(package_name, robot_name, save_dir, joints_dict)
+        # Write.write_display_launch(package_name, robot_name, save_dir)
+        # Write.write_gazebo_launch(package_name, robot_name, save_dir)
+        # Write.write_control_launch(package_name, robot_name, save_dir, joints_dict)
+        
+
+        # copy over launch files
+        utils.update_display_launch_py(save_dir, package_name, robot_name)
+        utils.update_gazebo_launch_py(save_dir, package_name, robot_name)
+        utils.update_control_launch_py(save_dir, package_name, robot_name) 
         
         # copy over package files
         utils.copy_package(save_dir, package_dir)
         utils.update_cmakelists(save_dir, package_name)
         utils.update_package_xml(save_dir, package_name)
-        utils.update_display_launch_py(save_dir, package_name, robot_name)
-        utils.update_gazebo_launch_py(save_dir, package_name, robot_name) 
 
         # Generate STl files        
         utils.copy_occs(root)
